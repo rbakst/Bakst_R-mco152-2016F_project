@@ -1,0 +1,5 @@
+I like this idea, I think it's flexible enough to grow nicely.
+
+Unlike many other project suggestions, this one sounds like it could only really work with some sort of back-end data store. Have you given this any thought? Do you intend to use a database or loose files or anything like that?
+
+YN
