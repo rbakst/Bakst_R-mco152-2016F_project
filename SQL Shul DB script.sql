@@ -94,4 +94,4 @@ constraint [FK_Membership_Link]
 --select * from Membership
 --select * from fAddress
 --select * from friend
---select * from person_membership_link
+--select * from friend_membership_link
