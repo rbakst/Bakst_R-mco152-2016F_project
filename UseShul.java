@@ -10,6 +10,7 @@ public class UseShul {
 
 	public static void main(String [] args) 
 	{
+
 		ArrayList<Person> personsToBeKeptInShulClass = new ArrayList<>();
 		int choice = 0;
 		while (choice != 3)
@@ -66,24 +67,17 @@ public class UseShul {
 		System.out.println("Date of Birth (mm/dd/yyyy): ");
 		LocalDate DOB = LocalDate.parse(keyboard.next(), formatter);
 		keyboard.nextLine();
-		System.out.println("Street: ");
-		String street = keyboard.nextLine();
-		System.out.println("Apt Number: ");
-		String aptNum = keyboard.next();
-		keyboard.nextLine();
-		System.out.println("City: ");
-		String city = keyboard.nextLine();
-		System.out.println("State: ");
-		String state = keyboard.nextLine();
-		System.out.println("Zipcode: ");
-		String zipcode = keyboard.next();
 		System.out.println("Gender: (m/f)");
 		char gender = keyboard.next().charAt(0);
 		System.out.println("EmailAddress: ");
 		String emailAddress = keyboard.next();
+		System.out.println("Membership ID: ");
+		String membershipID = keyboard.next();
 		
-		Person aPerson = new Person(title,firstName,midInitial,lastName,DOB, street, aptNum, city, state, zipcode, gender,emailAddress);
+		Person aPerson = new Person(title,firstName,midInitial,lastName,DOB, gender,emailAddress, membershipID);
 		personsToBeKeptInShulClass.add(aPerson);
+		
+	
 	}
 	
 

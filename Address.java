@@ -14,16 +14,14 @@ public class Address
 	
 	public Address(String street,  String aptNum, String city, String state, String zip) throws MissingDataException
 	{
-		
-		
-		addressID = ++lastAssignedID;
+		this.addressID = ++lastAssignedID;
 		//ensure that no field of the address is null
-		if(addressID == null || street == null || city == null || state == null || zip == null)
+		if(street == null || city == null || state == null || zip == null)
 		{
 			throw new MissingDataException();
 		}
 		//assign the values, construct the address
-		this.addressID = addressID;
+		
 		this.street = street; 
 		this.aptNum = aptNum;
 		this.city = city;

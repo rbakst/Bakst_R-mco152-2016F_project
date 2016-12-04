@@ -5,24 +5,24 @@ import exceptions.*;
 
 public class Person implements Comparable<Person>
 {
-	private Integer personID;
+	private String personID;
 	private String title;
 	private String firstName;
 	private char midInitial;
 	private String lastName;
 	private LocalDate DOB;
-	private Address address;
 	private char gender;
 	private String emailAddress;
+	private String membershipID;
 	
 	private static Integer lastAssignedID = 0;
 
-	public Person(String title, String firstName, char midInitial, String lastName, LocalDate DOB, Address address, 
+	public Person(String title, String firstName, char midInitial, String lastName, LocalDate DOB,
 			char gender, String emailAddress) throws MissingDataException
 	{
-		this.personID = ++lastAssignedID;
-		
-		if(personID == null || firstName == null || lastName == null || address == null)
+		this.personID = "p" + ++lastAssignedID;
+	//how to enforce gender
+		if(firstName == null || lastName == null || DOB == null)
 		{
 			throw new MissingDataException();
 		}
@@ -32,20 +32,15 @@ public class Person implements Comparable<Person>
 		this.midInitial = midInitial;
 		this.lastName = lastName;
 		this.DOB = DOB;
-		this.address = address;
 		this.gender = gender;
 		this.emailAddress = emailAddress;
+		this.membershipID = null;
 	}
-	
-	public Person(String title, String firstName, char midInitial, String lastName, LocalDate DOB, String street, String city, String aptNum, 
-			String state, String zip, char gender, String emailAddress) throws MissingDataException
-	{
-		this(title, firstName, midInitial, lastName, DOB, new Address(street, city, aptNum, state, zip), gender, emailAddress);
-	}
-
+//another ctor with a null char?
+	//test localdate?
 	public Person (Person p)throws MissingDataException
 	{
-		this(p.title, p.firstName, p.midInitial, p.lastName, p.DOB, p.address, p.gender, p.emailAddress);
+		this(p.title, p.firstName, p.midInitial, p.lastName, p.DOB, p.gender, p.emailAddress);
 	}
 	public String getTitle() {
 		return title;
@@ -71,7 +66,7 @@ public class Person implements Comparable<Person>
 		this.emailAddress = emailAddress;
 	}
 
-	public Integer getPersonID() {
+	public String getPersonID() {
 		return personID;
 	}
 
@@ -95,9 +90,7 @@ public class Person implements Comparable<Person>
 	{
 		return DOB;
 	}
-	public Address getAddress() throws MissingDataException{
-		return new Address(address);
-	}
+	
 
 	public char getGender() {
 		return gender;
@@ -107,6 +100,14 @@ public class Person implements Comparable<Person>
 		this.gender = gender;
 	}
 	
+	public String getMembershipID(){
+		return this.membershipID;
+	}
+	
+	public void setMembershipID(String membershipID) {
+		this.membershipID = membershipID;
+	}
+	
 	public String toString()
 	{
 		StringBuilder info = new StringBuilder();
@@ -114,9 +115,9 @@ public class Person implements Comparable<Person>
 		info.append("\n\n" + title + ". ");
 		info.append(firstName + " " + midInitial + " "+ lastName);
 		info.append("\nDOB: " + DOB);
-		info.append("\n" + address);
 		info.append("\ngender: "+ gender);
 		info.append("\nemail: " + emailAddress);
+		info.append("\nMembershipID: " + membershipID);
 		
 		return info.toString();
 		
@@ -124,6 +125,7 @@ public class Person implements Comparable<Person>
 	
 	public int compareTo(Person p)
 	{
+//based on id?
 		return this.lastName.compareTo(p.lastName);
 	}
 	
