@@ -4,9 +4,9 @@ go
 use Shul
 go
 
-
-create table FAddress(
-AddressID INT not null, 
+				
+create table [Address](
+AddressID int not null, 
 Street VARCHAR(30) not null,
 AptNum VARCHAR(5),
 City VARCHAR(45) not null,
@@ -16,47 +16,52 @@ constraint [PK_AddressID]
 	Primary Key (AddressID)
 					)
 
-create table Friend(
-FriendID int not null,
+					
+create table Membership (
+				MembershipID char(5) not null,
+				MembershipType VARCHAR(20) not null,
+				MembershipAddress int not null,
+				MembershipStartDate Date not null
+constraint [PK_MembershipID] 
+					Primary Key (MembershipID),
+constraint [FK_Person_Address]
+		Foreign Key (MembershipAddress) REFERENCES [Address] (AddressID),
+constraint [CHK_MembershipType]
+					check (MembershipType IN('FULL', 
+											'ASSOCIATE', 'FRIEND'))
+				)
+
+create table Person(
+PersonID char(5) not null,
+MembershipID char(5) not null,
+Title varchar(5),
 FName VARCHAR(45) not null,
 MidInit CHAR(1),
 LName VARCHAR(45) not null,
 DOB Date,
-AddressID int,
 EmailAddress varchar(40),
 Gender char(1) not null,
-Title varchar(5),
-isMember bit not null,
 constraint [PK_PersonID]
-		Primary Key (FriendID),
-constraint [FK_Friend_Address]
-		Foreign Key (AddressID) REFERENCES FAddress (AddressID),
+		Primary Key (PersonID),
+constraint [FK_Person_Membership]
+Foreign Key (MembershipID) REFERENCES Membership(MembershipID),
 constraint [CHK_Gender]
-		check (Gender IN ('F', 'M'))
+		check (Gender IN ('F', 'M')),
+constraint [CHK_EmailAddress]
+		check (EmailAddress Like('%@%'))
 )
 
 
-create table Membership (
-				MembershipID int not null,
-				MembershipType VARCHAR(11) not null,
-				MembershipStartDate Date not null
-				constraint [PK_MembershipID] 
-					Primary Key (MembershipID),
-				constraint [CHK_MembershipType]
-					check (MembershipType IN('FULL MEMBERSHIP', 
-											'ASSOCIATE MEMBERSHIP', 'FRIEND'))
-				)
-
-create table Friend_Membership_Link(
-FriendID int not null,
-MembershipID int not null,
-constraint [PK_Person_Membership_Link]
-	Primary Key (FriendID, MembershipID),
-constraint [FK_Person_Link] 
-	Foreign Key (FriendID) REFERENCES Friend (FriendID),
-constraint [FK_Membership_Link] 
-	Foreign Key (MembershipID) REFERENCES Membership (MembershipID)
-)				
+--create table Friend_Membership_Link(
+--FriendID int not null,
+--MembershipID int not null,
+--constraint [PK_Person_Membership_Link]
+--	Primary Key (FriendID, MembershipID),
+--constraint [FK_Person_Link] 
+--	Foreign Key (FriendID) REFERENCES Friend (FriendID),
+--constraint [FK_Membership_Link] 
+--	Foreign Key (MembershipID) REFERENCES Membership (MembershipID)
+--)				
 
 
 
@@ -94,4 +99,4 @@ constraint [FK_Membership_Link]
 --select * from Membership
 --select * from fAddress
 --select * from friend
---select * from friend_membership_link
+--select * from person_membership_link
