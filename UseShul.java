@@ -149,6 +149,15 @@ public class UseShul {
 					
 					break;
 				case 6:
+					try {
+						AddressLabel.printFemaleAddressLabels(connection);
+					} catch (FileNotFoundException | UnsupportedEncodingException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					break;
+				case 7:
 					connection.close();
 					System.exit(0);
 				default:
@@ -167,11 +176,17 @@ public class UseShul {
 		System.out.println("3. Add an Address");
 		System.out.println("4. Display Persons");
 		System.out.println("5. Print Address Labels for all People");
-		System.out.println("6. Exit");
+		System.out.println("6. Print Address Labels for Women's League");
+		System.out.println("7. Exit");
 
 		Scanner keyboard = new Scanner(System.in);
 		int choice = keyboard.nextInt();
 
+		while(choice < 1 || choice > 7){
+			System.out.println("Please enter a valid Menu Option");;
+			choice = keyboard.nextInt();
+		}
+		
 		return choice;
 	}
 

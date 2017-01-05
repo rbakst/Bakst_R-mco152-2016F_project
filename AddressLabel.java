@@ -134,6 +134,73 @@ public class AddressLabel {
 		Desktop d = Desktop.getDesktop();
 		d.open(f);
 }
+	
+	
+	public static void printFemaleAddressLabels(Connection connection) throws SQLException, IOException {
+		String fileName = LocalDate.now().toString() + "FemaleAddLabels.txt";
+		PrintWriter writer = new PrintWriter(new FileWriter(fileName, true));
+	    
+		String qry = "select membershipid from membership";
+
+
+		PreparedStatement statement = connection.prepareStatement(qry, ResultSet.TYPE_SCROLL_SENSITIVE,
+				ResultSet.CONCUR_UPDATABLE);
+
+		ResultSet rsMem = statement.executeQuery();;
+		String aptNum = "",st ="",city="",state="", zip="";
+
+		AddressLabel a = new AddressLabel();
+		
+		while (rsMem.next()) {
+			String qry2 = "select * from person p join Membership m on p.MembershipID = m.MembershipID join address a on a.addressid = m.MembershipAddress where p.gender = 'f' and m.membershipid = ?";
+
+			PreparedStatement statement2 = connection.prepareStatement(qry2, ResultSet.TYPE_SCROLL_SENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+
+
+			
+			statement2.setString(1, rsMem.getString("MembershipID"));
+			ResultSet ppl = statement2.executeQuery();
+
+			//ppl.last();
+			
+				ppl.first();
+				String title = ppl.getString("Title");
+				String fname = ppl.getString("fname");
+				String lname = ppl.getString("lname");
+				
+				a.formattedName = title + " " + fname + " " + lname;
+				
+			
+
+			st = ppl.getString("street");
+			aptNum = ppl.getString("aptNum");
+			city = ppl.getString("city");
+			state = ppl.getString("addrstate");
+			zip = ppl.getString("zip");
+
+	if (aptNum.equals("null")) {
+		a.AddressLine1 = st;
+		
+	}else{
+		a.AddressLine1 =st +" Apt" + aptNum;
+	}
+	a.AddressLine2 = city + ", " + state + " " + zip;
+	
+	
+	writer.println(a.formattedName);
+	writer.println(a.AddressLine1);
+	writer.println(a.AddressLine2);
+	writer.println("");
+		}
+		
+		
+		writer.close();
+		
+		File f = new File(fileName);
+		Desktop d = Desktop.getDesktop();
+		d.open(f);
+}
 }
 
 
