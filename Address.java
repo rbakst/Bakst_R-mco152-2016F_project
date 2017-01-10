@@ -53,7 +53,7 @@ public class Address {
 		Integer addressID = ++lastAssignedID;
 		USState newState = USState.valueOf(state.replaceAll("\\s", "").toUpperCase());
 
-		String sqlInsert = "insert into person Values (?,?,?,?,?,?,?,?,?)";
+		String sqlInsert = "insert into address Values (?,?,?,?,?,?)";
 
 		PreparedStatement statement = connection.prepareStatement(sqlInsert);
 		statement.setInt(1, addressID);
